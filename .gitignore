@@ -1,0 +1,8 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# instance folder containing sensitive info
+instance/
+
+*.DS_Store
