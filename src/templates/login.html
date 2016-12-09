@@ -1,0 +1,15 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }} - jiayangpan</title>
+    {% else %}
+    <title>jiayangpan</title>
+    {% endif %}
+  </head>
+  <body>
+    <div>Jiayangpan:
+        <a href="{{ url_for('login_gg') }}">Login as Google</a>
+<!--         <a href="{{ url_for('login_fb') }}">Login as Facebook</a> -->
+    </div>
+  </body>
+</html>
