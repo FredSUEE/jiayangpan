@@ -9,10 +9,10 @@ from flask_login import (
     current_user,
     login_user
 )
-from requests_oauthlib import OAuth2Session
 
 from src import app, db, login_manager
 from .models import User
+from util.authenticate import get_google_auth
 
 import json
 import urllib2
@@ -51,8 +51,6 @@ def login():
     session['oauth_state'] = state
     return render_template('login.html', auth_url=auth_url)
 
-# http://localhost:5000/oauth2callback?state=NguTIuLLjUZkW9W6kd4LonYnXSzxRL&code=4/jp91T4AsyxoYuwa2pyBd7yyJtwISyXWw7OzqiwbIr2Q#
-
 
 @app.route('/oauth2callback')
 def callback():
@@ -86,7 +84,7 @@ def callback():
                 user = User()
                 user.email = email
             user.name = user_data['name']
-            print(token)
+            # print(token)
             user.tokens = json.dumps(token)
             user.avatar = user_data['picture']
             db.session.add(user)
@@ -94,20 +92,3 @@ def callback():
             login_user(user)
             return redirect(url_for('index'))
         return 'Could not fetch your information.'
-
-
-def get_google_auth(state=None, token=None):
-    if token:
-        return OAuth2Session(
-            app.config['GOOGLE_CLIENT_ID'],
-            token=token)
-    if state:
-        return OAuth2Session(
-            app.config['GOOGLE_CLIENT_ID'],
-            state=state,
-            redirect_uri=app.config['GOOGLE_REDIRECT_URI'])
-    oauth = OAuth2Session(
-        app.config['GOOGLE_CLIENT_ID'],
-        redirect_uri=app.config['GOOGLE_REDIRECT_URI'],
-        scope=app.config['GOOGLE_AUTH_SCOPE'])
-    return oauth
