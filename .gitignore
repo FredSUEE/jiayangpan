@@ -9,3 +9,4 @@ instance/
 
 # TODO: only for db visualization, better way?
 db_show.py
+src/templates/profile.html

@@ -7,7 +7,8 @@ from flask import (
 )
 from flask_login import (
     current_user,
-    login_user
+    login_user,
+    logout_user
 )
 
 from src import app, db, login_manager
@@ -36,8 +37,13 @@ def index():
             'body': 'The Avengers movie was so cool!'
         }
     ]
-    return render_template("index.html",
+    return render_template('index.html',
                            posts=posts)
+
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
 
 
 @app.route('/login')
@@ -92,3 +98,9 @@ def callback():
             login_user(user)
             return redirect(url_for('index'))
         return 'Could not fetch your information.'
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
