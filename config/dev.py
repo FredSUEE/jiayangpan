@@ -11,9 +11,9 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.db')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # google auth2 info
-CLIENT_ID = ''
-CLIENT_SECRET = ''
-REDIRECT_URI = ''
-AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
-TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
-USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'
+GOOGLE_CLIENT_ID = ''
+GOOGLE_CLIENT_SECRET = ''
+GOOGLE_REDIRECT_URI = ''
+GOOGLE_AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
+GOOGLE_TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
+GOOGLE_USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'

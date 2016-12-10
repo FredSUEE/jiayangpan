@@ -2,6 +2,9 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+# for testing oauth on http
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
 
 APP_NAME = 'jiayangpan'
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'cai-bu-dao-ba'
@@ -11,9 +14,11 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.db')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # google auth2 info
-CLIENT_ID = ''
-CLIENT_SECRET = ''
-REDIRECT_URI = ''
-AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
-TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
-USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'
+GOOGLE_CLIENT_ID = ''
+GOOGLE_CLIENT_SECRET = ''
+GOOGLE_REDIRECT_URI = ''
+GOOGLE_AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
+GOOGLE_TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
+GOOGLE_AUTH_SCOPE = ['https://www.googleapis.com/auth/userinfo.email',
+                     'https://www.googleapis.com/auth/userinfo.profile']
+GOOGLE_USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'

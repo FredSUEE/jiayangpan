@@ -6,3 +6,6 @@ __pycache__/
 instance/
 
 *.DS_Store
+
+# TODO: only for db visualization, better way?
+db_show.py
