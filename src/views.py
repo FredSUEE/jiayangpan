@@ -3,12 +3,15 @@ from flask import (
     redirect,
     url_for,
     session,
-    request
+    request,
+    g,
+    flash
 )
 from flask_login import (
     current_user,
     login_user,
-    logout_user
+    logout_user,
+    login_required
 )
 
 from src import app, db, login_manager
@@ -24,26 +27,29 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+@app.before_request
+def before_request():
+    g.user = current_user
+
+
 @app.route('/')
 @app.route('/index')
 def index():
-    posts = [  # fake array of posts
-        {
-            'author': {'nickname': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'nickname': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html',
-                           posts=posts)
+    return render_template('index.html')
 
 
-@app.route('/profile')
-def profile():
-    return render_template('profile.html')
+# TODO: id in the url is not good but it's the only unique key
+# we have right now. Refactor the user model to add 'nickname'
+# maybe and use it in the url
+@app.route('/profile/<int:user_id>')
+@login_required
+def profile(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    if user is None:
+        flash("User with id {} not found.".format(user_id))
+        return redirect(url_for('index'))
+    return render_template('profile.html',
+                           user=user)
 
 
 @app.route('/login')
@@ -91,6 +97,7 @@ def callback():
                 user.email = email
             user.name = user_data['name']
             # print(token)
+            # TODO: no need to add user if already in the DB
             user.tokens = json.dumps(token)
             user.avatar = user_data['picture']
             db.session.add(user)
