@@ -15,7 +15,7 @@ from flask_login import (
 )
 
 from src import app, db, login_manager
-from .models import User
+from models.user import User
 from util.authenticate import get_google_auth
 
 import json

@@ -2,6 +2,9 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+# for testing oauth on http
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
 
 APP_NAME = 'jiayangpan'
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'cai-bu-dao-ba'
