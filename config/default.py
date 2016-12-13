@@ -16,7 +16,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 # google auth2 info
 GOOGLE_CLIENT_ID = ''
 GOOGLE_CLIENT_SECRET = ''
-GOOGLE_REDIRECT_URI = ''
+GOOGLE_REDIRECT_URI = 'http://localhost:5000/oauth2callback'
 GOOGLE_AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
 GOOGLE_TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
 GOOGLE_AUTH_SCOPE = ['https://www.googleapis.com/auth/userinfo.email',

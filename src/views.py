@@ -38,16 +38,16 @@ def index():
     return render_template('index.html')
 
 
-# TODO: id in the url is not good but it's the only unique key
-# we have right now. Refactor the user model to add 'nickname'
-# maybe and use it in the url
-@app.route('/profile/<int:user_id>')
+@app.route('/profile')
 @login_required
-def profile(user_id):
-    user = User.query.filter_by(id=user_id).first()
-    if user is None:
-        flash("User with id {} not found.".format(user_id))
-        return redirect(url_for('index'))
+def profile():
+    user = g.user
+    # unicode user_id
+    user_id = request.args.get('id')
+
+    # need to query for the user object for other users' pages
+    if user_id is not None and user.id != int(user_id):
+        user = User.query.filter_by(id=user_id).first()
     return render_template('profile.html',
                            user=user)
 
@@ -111,3 +111,14 @@ def callback():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('error.html', status_code=404), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('error.html', status_code=500), 500
