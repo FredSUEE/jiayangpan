@@ -38,6 +38,7 @@ def index():
     return render_template('index.html')
 
 
+# TODO: add nonaccessible pages? say /profile?id=100 and user 100 doesn't exist
 @app.route('/profile')
 @login_required
 def profile():
@@ -50,6 +51,13 @@ def profile():
         user = User.query.filter_by(id=user_id).first()
     return render_template('profile.html',
                            user=user)
+
+
+@app.route('/profile/setting')
+@login_required
+def profile_setting():
+    user = g.user
+    return render_template('profile_setting.html')
 
 
 @app.route('/login')
