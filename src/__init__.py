@@ -14,4 +14,4 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.session_protection = 'strong'
 
-from src import views, models
+from src import views, models # noqa

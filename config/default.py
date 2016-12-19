@@ -30,4 +30,4 @@ FACEBOOK_REDIRECT_URI = 'http://localhost:5000/oauth2callback/facebook'
 FACEBOOK_AUTH_URI = 'https://www.facebook.com/dialog/oauth'
 FACEBOOK_TOKEN_URI = 'https://graph.facebook.com/oauth/access_token'
 FACEBOOK_AUTH_SCOPE = []
-FACEBOOK_USER_INFO = 'https://graph.facebook.com/me?fields=name,email,picture.type(large)'
+FACEBOOK_USER_INFO = 'https://graph.facebook.com/me?fields=name,email,picture.type(large)' # noqa

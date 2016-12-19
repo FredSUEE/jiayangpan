@@ -5,8 +5,8 @@ from flask import (
     session,
     request,
     g,
-    flash
 )
+
 from flask_login import (
     current_user,
     login_user,
@@ -56,11 +56,11 @@ def profile():
                            user=user)
 
 
-@app.route('/profile/setting')
-@login_required
-def profile_setting():
-    user = g.user
-    return render_template('profile_setting.html')
+# @app.route('/profile/setting')
+# @login_required
+# def profile_setting():
+#     user = g.user
+#     return render_template('profile_setting.html')
 
 
 @app.route('/login')
@@ -109,7 +109,9 @@ def callback(provider):
                 if resp.status_code == 200:
                     user_data = resp.json()
                     email = user_data['email']
-                    user = User.query.filter_by(email=email, login_method='google').first()
+                    user = User.query.filter_by(
+                        email=email,
+                        login_method='google').first()
                     if user is None:
                         user = User()
                         user.email = email
@@ -124,7 +126,8 @@ def callback(provider):
                     login_user(user)
                     return redirect(url_for('index'))
             elif provider == 'facebook':
-                facebook = get_facebook_auth(state=session['facebook_oauth_state'])
+                facebook = get_facebook_auth(
+                    state=session['facebook_oauth_state'])
                 try:
                     token = facebook.fetch_token(
                         app.config['FACEBOOK_TOKEN_URI'],
@@ -137,7 +140,9 @@ def callback(provider):
                 if resp.status_code == 200:
                     user_data = resp.json()
                     email = user_data['email']
-                    user = User.query.filter_by(email=email, login_method='facebook').first()
+                    user = User.query.filter_by(
+                        email=email,
+                        login_method='facebook').first()
                     if user is None:
                         user = User()
                         user.email = email
